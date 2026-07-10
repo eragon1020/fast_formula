@@ -13,12 +13,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Permite a SonarCloud leer todo el historial de Git
+          fetch-depth: 0
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Lo da GitHub automáticamente
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
@@ -26,6 +26,7 @@ jobs:
             -Dsonar.organization=eragon1020
             -Dsonar.sources=Assets/
             -Dsonar.exclusions=Assets/Plugins/**,**/ThirdParty/**
+            -Dsonar.scanAllFiles=true
             -Dsonar.c.file.suffixes=-
             -Dsonar.cpp.file.suffixes=-
             -Dsonar.objc.file.suffixes=-
