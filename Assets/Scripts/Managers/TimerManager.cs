@@ -4,6 +4,9 @@ using UnityEngine;
 public class TimerManager : MonoBehaviour
 {
     public float timeRemaining = 60f;
+    public GameObject panelVictoria;
+    public AudioSource gameAudio;
+    public AudioClip victoryAudio;
 
     public TMP_Text timerText;
 
@@ -20,6 +23,14 @@ public class TimerManager : MonoBehaviour
         {
             timeRemaining -= Time.deltaTime;
             UpdateTimer();
+        }
+        else if (timeRemaining <= 0)
+        {
+            ElementSpawner.SetAllVisible(false);
+            Cauldron.SetAllVisible(false);
+            gameAudio.volume = 0.1f;
+            gameAudio.PlayOneShot(victoryAudio);
+            panelVictoria.SetActive(true);
         }
         else
         {

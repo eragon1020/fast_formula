@@ -26,6 +26,11 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene("Game");
     }
 
+    public void GoToMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
     public void OpenPanel(GameObject panel)
     {
         panel.SetActive(true);

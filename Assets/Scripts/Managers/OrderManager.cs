@@ -27,9 +27,6 @@ public class OrderManager : MonoBehaviour
     [Header("Sprites")]
     [SerializeField] private List<ResultSprite> resultSprites;
 
-    public InputAction successAction;
-    public InputAction failedAction;
-
     public ReactionData currentOrder;
     private List<ReactionData> validReactions;
 
@@ -39,9 +36,6 @@ public class OrderManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        successAction.Enable();
-        failedAction.Enable();
-
         clockImage = orderClock.GetComponent<Image>();
 
         validReactions = reactionManager.GetAllReactions().FindAll(reaction => reaction.type == "Success");
@@ -66,16 +60,6 @@ public class OrderManager : MonoBehaviour
             clockImage.color = Color.red;
         }
 
-        if (successAction.triggered)
-        {
-            OrderSuccess();
-        }
-
-        if (failedAction.triggered)
-        {
-            OrderIncorrect();
-        }
-
         SetActiveClock();
     }
 
@@ -88,8 +72,6 @@ public class OrderManager : MonoBehaviour
         orderClock.SetActive(true);
         clockImage.color = Color.white;
         clientText.SetActive(false);
-
-        Debug.Log("Nuevo Pedido: " + currentOrder.resultName);
 
         UpdateOrderUI();
     }
@@ -107,7 +89,6 @@ public class OrderManager : MonoBehaviour
     {
         isDone = true;
 
-        Debug.Log("El cliente se fue");
         scoreManager.OnOrderExpired();
 
         clientText.SetActive(true);
@@ -119,7 +100,6 @@ public class OrderManager : MonoBehaviour
     {
         isDone = true;
 
-        Debug.Log("El pedido fue entregado correctamente");
         scoreManager.OnCorrectMix(timeRemaining);
 
         Invoke(nameof(GenerateOrder), 2f);
@@ -129,7 +109,6 @@ public class OrderManager : MonoBehaviour
     {
         isDone = true;
 
-        Debug.Log("El pedido fue entregado pero la mezcla es incorrecta");
         scoreManager.OnWrongMix(timeRemaining);
 
         Invoke(nameof(GenerateOrder), 2f);
